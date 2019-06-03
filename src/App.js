@@ -11,6 +11,12 @@ function App() {
 
   function callback({type, payload}) {
     console.log('type', type)
+    if (type === 'self') {
+      setId(payload)
+      setJoined(true)
+    } else if (type === 'list') {
+      setPlayers(payload)
+    }
   }
 
   const handleJoin = () => joinGame(name, callback)
@@ -18,7 +24,8 @@ function App() {
   return (
     <div className="App">
       <input type="text" onChange={e => setName(e.target.value)} disabled={joined} />
-      <button disabled={name === null} onClick={handleJoin}>Join Game</button>
+      <button disabled={joined} onClick={handleJoin}>Join Game</button>
+      {joined && <label>your id: {id}</label>}
     </div>
   );
 }
